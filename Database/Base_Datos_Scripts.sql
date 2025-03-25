@@ -1,91 +1,55 @@
-﻿-- Crear Base de Datos
-CREATE DATABASE VisorTickets;
-GO
+﻿create database VisorTickets;
 
--- Usar la base de datos creada
-USE VisorTickets;
+use VisorTickets;
+go;
 
--- Crear Tabla de Roles
-CREATE TABLE Roles (
-    ro_identificador INT PRIMARY KEY IDENTITY(1,1),
-    ro_descripcion NVARCHAR(125) NOT NULL,
-    ro_fecha_auditoria DATETIME DEFAULT GETDATE(),
-    ro_agregado_por NVARCHAR(10) NOT NULL,
-    ro_fecha_modificacion DATETIME NULL,
-    ro_modificado_por NVARCHAR(10) NULL
+create table Roles
+(
+ro_identificador int primary key identity(1,1),
+ro_descripcion nvarchar(125),
+ro_fecha_adicion datetime default getdate(),
+ro_adicionado_por nvarchar(10) not null,
+ro_fecha_modificacion datetime,
+ro_modificado_por nvarchar(10)
 );
 
--- Insertar Roles
-INSERT INTO Roles (ro_descripcion, ro_agregado_por) 
-VALUES 
-    ('Soporte', 'admin'),
-    ('Analista', 'admin');
+insert into Roles values('Soporte', GETDATE(), 'usuario', null, null);
+insert into Roles values('Analista', GETDATE(), 'admin', null, null);
 
--- Crear Tabla de Usuarios
-CREATE TABLE Usuarios (
-    us_identificador INT PRIMARY KEY IDENTITY(1,1),
-    us_nombre_completo NVARCHAR(150) NOT NULL,
-    us_correo NVARCHAR(150) NOT NULL,
-    us_clave NVARCHAR(255) NOT NULL,
-    us_ro_identificador INT FOREIGN KEY REFERENCES Roles(ro_identificador),
-    us_estado NVARCHAR(1) NOT NULL,
-    us_fecha_agregado DATETIME DEFAULT GETDATE() NOT NULL,
-    us_agregado_por NVARCHAR(10) NOT NULL,
-    us_fecha_modificacion DATETIME NULL,
-    us_modificado_por NVARCHAR(10) NULL
+create table Usuarios (
+us_identificador int primary key identity(1,1),
+us_nombre_completo nvarchar(150) not null,
+us_correo nvarchar(150) not null,
+us_clave nvarchar(255) not null,
+us_ro_identificador int foreign key (us_ro_identificador) references Roles(ro_identificador),
+us_estado nvarchar(1) not null,
+us_fecha_adicion datetime default getdate() not null,
+us_adicionado_por nvarchar(10) not null,
+us_fecha_modificacion datetime,
+us_modificado_por nvarchar(10));
+
+insert into Usuarios values('Karla Brenes', 'Kbrenesc@castrocarazo.ac.cr', '123', 1, 'A', getdate(), 'admin', null, null);
+insert into Usuarios values('Josua Esteban', 'Esteban@castrocarazo.ac,cr', '123', 1, 'A', getdate(), 'admin', null, null);
+select* from Tiquetes;
+
+create table Tiquetes
+(
+ti_identificador int primary key identity(1,1),
+
+ti_asunto nvarchar(150) not null,
+ti_categoria nvarchar(150) not null,
+ti_us_id_asigna int foreign key (ti_us_id_asigna) references Usuarios(us_identificador),
+ti_urgencia nvarchar(150) not null,
+ti_importancia nvarchar(150) not null,
+ti_estado nvarchar(1) not null,
+ti_fecha_adicion datetime default getdate() not null,
+ti_adicionado_por nvarchar(10) not null,
+ti_fecha_modificacion datetime,
+ti_modificado_por nvarchar(10)
 );
 
--- Insertar Usuario
-INSERT INTO Usuarios (
-    us_nombre_completo, 
-    us_correo, 
-    us_clave, 
-    us_ro_identificador, 
-    us_estado, 
-    us_agregado_por
-) VALUES (
-    'Nayel Solorzano',
-    'nayelsolorzanom213@gmail.com', 
-    '123', 
-    1, 
-    'A', 
-    'admin'
-);
+insert into Tiquetes(ti_asunto, ti_categoria, ti_us_id_asigna , ti_urgencia ,ti_importancia, ti_estado, ti_fecha_adicion, ti_adicionado_por)
+values ('Problema de red', 'Redes', 5, 'Alta', 'Alta', 'A', GETDATE(), 'admin');
 
--- Crear Tabla de Tiquetes
-CREATE TABLE Tiquetes (
-    ti_identificador INT PRIMARY KEY IDENTITY(1,1),
-    ti_asunto NVARCHAR(150) NOT NULL,
-    ti_categoria NVARCHAR(150) NOT NULL,
-    ti_us_id_asignado INT FOREIGN KEY REFERENCES Usuarios(us_identificador),
-    ti_urgencia NVARCHAR(150) NOT NULL,
-    ti_importancia NVARCHAR(150) NOT NULL,
-    ti_estado NVARCHAR(1) NOT NULL,
-    ti_fecha_agregado DATETIME DEFAULT GETDATE() NOT NULL,
-    ti_agregado_por NVARCHAR(10) NOT NULL,
-    ti_fecha_modificacion DATETIME NULL,
-    ti_modificado_por NVARCHAR(10) NULL
-);
-
--- Insertar Tiquetes
-INSERT INTO Tiquetes (
-    ti_asunto, 
-    ti_categoria, 
-    ti_us_id_asignado, 
-    ti_urgencia, 
-    ti_importancia, 
-    ti_estado, 
-    ti_agregado_por
-) VALUES 
-    ('Problema de red', 'Redes', 1, 'Alta', 'Alta', 'A', 'admin'),
-    ('Problema de computadora', 'Hardware', 1, 'Alta', 'Alta', 'A', 'admin');
-
--- Consultas de verificación
-SELECT * FROM Roles;
-SELECT * FROM Usuarios;
-SELECT * FROM Tiquetes;
-
--- Consulta para verificar la relación entre Usuarios y Roles
-SELECT ro_identificador, us_ro_identificador, us_correo
-FROM Usuarios
-JOIN Roles ON ro_identificador = us_ro_identificador;
+insert into Tiquetes(ti_asunto, ti_categoria, ti_us_id_asigna ,ti_urgencia ,ti_importancia, ti_estado, ti_fecha_adicion, ti_adicionado_por)
+values ('Problema de compu', 'Hardware', 5, 'Alta', 'Alta', 'A', GETDATE(), 'admin');
