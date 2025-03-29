@@ -7,7 +7,7 @@ namespace WebAPITickets.Database
     {
         public ContextoBD(DbContextOptions<ContextoBD> options) : base(options) { }
 
-        public DbSet<Roles> ListaRoles { get; set; }
+        public DbSet<Roles> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 

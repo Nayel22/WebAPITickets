@@ -26,7 +26,7 @@ namespace WebAPITickets.Controllers
 
         {
 
-            return await _contexto.ListaRoles.ToListAsync();
+            return await _contexto.Roles.ToListAsync();
 
         }
 
