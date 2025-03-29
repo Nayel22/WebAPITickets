@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebAPITickets.Database;
 using WebAPITickets.Models;
 
@@ -9,21 +10,23 @@ namespace WebAPITickets.Controllers
     [Route("api/[controller]")]
     public class RolesController : Controller
     {
-        private readonly ContextoBD _context;
+        private readonly ContextoBD _contexto;
 
-        public RolesController(ContextoBD context)
+        public RolesController(ContextoBD contexto)
         {
 
-            _context = context;
-        }
+            _contexto = contexto;
 
+
+
+        }
         [HttpGet]
 
         public async Task<ActionResult<IEnumerable<Roles>>> GetRol()
 
         {
 
-            return await _contexto.listaRoles.ToListAsync();
+            return await _contexto.ListaRoles.ToListAsync();
 
         }
 
