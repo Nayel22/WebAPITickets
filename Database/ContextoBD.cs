@@ -21,19 +21,19 @@ namespace WebAPITickets.Database
             modelBuilder.Entity<Tiquetes>().HasKey(x => x.ti_identificador);
 
 
-            // Configura la relación entre Usuarios y Roles
-            modelBuilder.Entity<Usuarios>()
-                .HasOne(u => u.Rol)
-                .WithMany()
-                .HasForeignKey(u => u.us_ro_identificador);
+            //// Configura la relación entre Usuarios y Roles
+            //modelBuilder.Entity<Usuarios>()
+            //    .HasOne(u => u.Rol)
+            //    .WithMany()
+            //    .HasForeignKey(u => u.us_ro_identificador);
 
 
 
-            // Configura la relación entre Tiquetes y Usuarios
-            modelBuilder.Entity<Tiquetes>()
-                .HasOne(t => t.UsuarioAsignado)
-                .WithMany()
-                .HasForeignKey(t => t.ti_us_id_asigna);
+            //// Configura la relación entre Tiquetes y Usuarios
+            //modelBuilder.Entity<Tiquetes>()
+            //    .HasOne(t => t.UsuarioAsignado)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.ti_us_id_asigna);
         }
 
     }

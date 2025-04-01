@@ -39,11 +39,26 @@ namespace WebAPITickets.Controllers
         [Route("crear")]
         public async Task<ActionResult<Tiquetes>> PostTiquete([FromBody] Tiquetes tiquete)
         {
-            _contexto.Tiquetes.Add(tiquete);
+            // Solo guardar las propiedades esenciales
+            var nuevoTiquete = new Tiquetes
+            {
+                ti_asunto = tiquete.ti_asunto,
+                ti_categoria = tiquete.ti_categoria,
+                ti_us_id_asigna = tiquete.ti_us_id_asigna,
+                ti_urgencia = tiquete.ti_urgencia,
+                ti_importancia = tiquete.ti_importancia,
+                ti_estado = tiquete.ti_estado,
+                ti_solucion = tiquete.ti_solucion,
+                ti_fecha_adicion = DateTime.Now,
+                ti_adicionado_por = tiquete.ti_adicionado_por
+            };
+
+            _contexto.Tiquetes.Add(nuevoTiquete);
             await _contexto.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTiqueteById), new { id = tiquete.ti_identificador }, tiquete);
+            return CreatedAtAction(nameof(GetTiqueteById), new { id = nuevoTiquete.ti_identificador }, nuevoTiquete);
         }
+
 
         [HttpPut]
         [Route("actualizar/{id}")]

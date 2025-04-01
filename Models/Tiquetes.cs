@@ -16,7 +16,7 @@
         public string? ti_modificado_por { get; set; }
 
         // Propiedad de navegación para la relación de clave foránea
-        public virtual Usuarios? UsuarioAsignado { get; set; }
+        //public virtual Usuarios? UsuarioAsignado { get; set; }
 
     }
 }

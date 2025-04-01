@@ -14,7 +14,7 @@
         public string? us_modificado_por { get; set; }
 
         // Propiedad de navegación para la relación de clave foránea
-        public virtual Roles? Rol { get; set; }
+        //public virtual Roles? Rol { get; set; }
 
     }
 }
